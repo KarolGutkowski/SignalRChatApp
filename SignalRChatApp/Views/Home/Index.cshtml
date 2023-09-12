@@ -3,9 +3,20 @@
 
 <h1>TEST</h1>
 
-<ul>
-	@foreach(var message in Model)
+<ul id="messages-list">
+	@foreach(var elem in Model)
 	{
-		<li>@message.userName: @message.message</li>
+		<li>@elem.userName: @elem.message</li>
 	}
 </ul>
+
+
+<p>User Name:</p>
+<input type="text" id="userName"/>
+
+<p>Message:</p>
+<input type="text" id="message-input"/>
+
+<p>
+<button onclick="send()">+</button>
+</p>

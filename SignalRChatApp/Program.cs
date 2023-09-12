@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using SignalRChatApp.Hubs;
 using SignalRChatApp.Models;
 using SignalRChatApp.Repositories;
@@ -8,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IChatRepository, ChatRepository>();
+builder.Services.AddSingleton<IChatRepository, ChatRepository>();
 
 var app = builder.Build();
 
@@ -26,9 +28,12 @@ app.UseRouting();
 app.MapDefaultControllerRoute();
 app.MapHub<ChatHub>("/chathub");
 
-app.MapPost("chathub/{user}/newmessage", (string userName, string message, IChatRepository auctionRepo) =>
+app.MapPost("chathub/{userName}/newmessage", 
+    ([FromRoute] string userName, 
+    [FromBody] MessageDto dto, 
+    IChatRepository auctionRepo) =>
 {
-    var chatMessage = new ChatMessage(userName, message);
+    var chatMessage = new ChatMessage(userName, dto.message);
     auctionRepo.addMessage(chatMessage);
 });
 
