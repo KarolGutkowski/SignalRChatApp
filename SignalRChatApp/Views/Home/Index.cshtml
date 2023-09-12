@@ -1,0 +1,11 @@
+﻿@using SignalRChatApp.Models;
+@model IEnumerable<ChatMessage>
+
+<h1>TEST</h1>
+
+<ul>
+	@foreach(var message in Model)
+	{
+		<li>@message.userName: @message.message</li>
+	}
+</ul>
