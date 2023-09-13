@@ -3,6 +3,7 @@
 
 <h1>TEST</h1>
 
+
 <ul id="messages-list">
 	@foreach(var elem in Model)
 	{
@@ -10,13 +11,14 @@
 	}
 </ul>
 
+<form>
+	<p>User Name:</p>
+	<input type="text" id="userName"/>
 
-<p>User Name:</p>
-<input type="text" id="userName"/>
-
-<p>Message:</p>
-<input type="text" id="message-input"/>
-
+	<p>Message:</p>
+	<textarea id="message-input" oninput="notifyUserWritingMessage()">
+	</textarea>
+</form>
 <p>
-<button onclick="send()">+</button>
+<button onclick="send()" id="send-button">Send</button>
 </p>

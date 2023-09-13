@@ -1,5 +1,6 @@
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -16,3 +17,26 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#message-input {
+    height: 200px;
+    width: 200px;
+    text-align: left;
+    resize: none;
+    overflow: auto;
+}
+
+#userName {
+    width: 200px;
+}
+
+#send-button {
+    background-color: #3EB2FD;
+    background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+    color: white;
+    height: 30px;
+    width: 80px;
+    border: 0px;
+    border-radius: 100px;
+}
+

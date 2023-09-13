@@ -13,6 +13,10 @@ const initializeSignalRConnection = () => {
         messageList.innerHTML += newMessage;
     });
 
+    connection.on("ReceiveSomeoneWriting", () => {
+        console.log("some other user is actively writing");
+    });
+
     connection.start().catch(err => console.error(err.toSring()));
     return connection;
 }
@@ -21,7 +25,9 @@ const connection = initializeSignalRConnection();
 
 const send = () => {
     var userName = document.getElementById("userName").value;
-    var message = document.getElementById("message-input").value;
+    var messageInput = document.getElementById("message-input");
+    var message = messageInput.value;
+    messageInput.value = "";
 
     console.log(userName + " " + message);
 
@@ -37,4 +43,10 @@ const send = () => {
         username: userName,
         message: message
     });
+}
+
+const notifyUserWritingMessage = () => {
+    console.log("user writing message");
+
+    connection.invoke("NotifyThatImWriting");
 }
