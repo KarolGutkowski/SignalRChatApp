@@ -12,7 +12,7 @@ namespace SignalRChatApp.Hubs
 
         public async Task NotifyThatImWriting()
         {
-            await Clients.All.SendAsync("ReceiveSomeoneWriting");
+            await Clients.Others.SendAsync("ReceiveSomeoneWriting");
         }
     }
 }

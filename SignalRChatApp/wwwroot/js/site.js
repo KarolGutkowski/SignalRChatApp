@@ -13,8 +13,18 @@ const initializeSignalRConnection = () => {
         messageList.innerHTML += newMessage;
     });
 
+    let timerId;
+
     connection.on("ReceiveSomeoneWriting", () => {
-        console.log("some other user is actively writing");
+        const notifyUserWriting = document.getElementById("another-user-writing-notifiaction");
+        console.log("someone writing");
+        notifyUserWriting.classList.remove('hidden');
+        if (timerId) {
+            clearTimeout(timerId);
+        }
+        timerId = setTimeout(() => {
+            notifyUserWriting.classList.add('hidden');
+        }, 1500);
     });
 
     connection.start().catch(err => console.error(err.toSring()));

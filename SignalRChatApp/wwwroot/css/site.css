@@ -30,6 +30,17 @@ body {
     width: 200px;
 }
 
+#another-user-writing-notifiaction {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
 #send-button {
     background-color: #3EB2FD;
     background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
