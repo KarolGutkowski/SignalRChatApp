@@ -7,7 +7,7 @@ namespace SignalRChatApp.Hubs
     {
         public async Task NotifyNewMessage(ChatMessage message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", message);
+            await Clients.Others.SendAsync("ReceiveMessage", message);
         }
 
         public async Task NotifyThatImWriting()
