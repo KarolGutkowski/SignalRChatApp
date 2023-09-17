@@ -1,24 +1,26 @@
 ﻿
-const initializeSignalRConnection = () => {
+const appendNewMessageToChatInterface = (userName, message) => {
+
+    const messageInbox = document.getElementById("msg-page");
+    const receivedMsg = document.createElement("div");
+    receivedMsg.className = "received-msg";
+    receivedMsg.innerHTML = `
+        <div class="received-msg-inbox">
+            <p class="single-msg">${message}</p>
+            <span class="time">18:31 PM | July 24</span>
+        </div>
+    `;
+    messageInbox.appendChild(receivedMsg);
+}
+
+const initializeSignalRConnection = (chatRoomName) => {
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("/chathub")
         .build();
 
-    
-    connection.on("ReceiveMessage", ({ userName, message }) => {
-        const messageList = document.getElementById("messages-list");
-        const messageInbox = document.getElementById("msg-page");
-        var messageMarkup = `<div class="received-msg">
-                                <div class="received-msg-inbox" >
-                                    <p class="single-msg">
-                                    ${message}
-                                    </p>
-                                 <span class="time">18:31 PM | July 24</span>
-                             </div>`
-        messageInbox.innerHTML += messageMarkup;
-        const newMessage = `<li>${userName}: ${message}</li>`;
 
-        messageList.innerHTML += newMessage;
+    connection.on("ReceiveMessage",({ userName, message }) => {
+        appendNewMessageToChatInterface(userName, message);
     });
 
     let timerId;
@@ -33,6 +35,12 @@ const initializeSignalRConnection = () => {
         timerId = setTimeout(() => {
             notifyUserWriting.classList.add('hidden');
         }, 1500);
+    });
+
+    connection.on("GetAllMessages", async (allMessages) => {
+        for (let msg of allMessages) {
+            await appendNewMessageToChatInterface(msg.userName, msg.message);
+        }
     });
 
     connection.start().catch(err => console.error(err.toSring()));
